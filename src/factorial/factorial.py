@@ -1,30 +1,28 @@
 #!/usr/bin/python
 import sys
 
-def factorial(num): 
-    if num < 0: 
-        print("Factorial de un número negativo no existe")
-        return 0
-    elif num == 0: 
+def factorial(n):
+    """Calcula el factorial de un número entero positivo."""
+    if n == 0 or n == 1:
         return 1
-        
-    else: 
-        fact = 1
-        while num > 1: 
-            fact *= num 
-            num -= 1
-        return fact 
+    return n * factorial(n - 1)
 
-if len(sys.argv) > 1:
-    num = int(sys.argv[1])
-else:
-     user_input = input("ingrese un numero para calcular su factorial: ")
-     user_input = user_input.replace("!","")
+def calcular_factoriales(desde, hasta):
+    """Calcula los factoriales de un rango de números."""
+    for num in range(desde, hasta + 1):
+        print(f"{num}! = {factorial(num)}")
+
+# Solicitar el rango al usuario si no se pasa como argumento
+rango = input("Ingrese un rango (ejemplo: 4-8): ").strip()
+
 try:
-    num = int(user_input)
-except valueerror:
-       print("por favor, ingrese un numero valido.")
-       sys.exit(1)
-
-print(f"Factorial  {num}! es {factorial(num)}") 
+    desde, hasta = map(int, rango.split("-"))  # Convertir entrada a enteros
+    if desde > hasta:
+        print("Error: El primer número debe ser menor o igual al segundo.")
+    elif desde < 0 or hasta < 0:
+        print("Error: No se permiten números negativos.")
+    else:
+        calcular_factoriales(desde, hasta)
+except ValueError:
+    print("Error: Ingrese un rango válido en el formato 'desde-hasta'.")
 
